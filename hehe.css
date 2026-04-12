@@ -1,0 +1,222 @@
+a:root {
+    --bg-color: #fffafb;
+    --text-color: #4a4a4a;
+    --accent-color: #ffb7c5;
+    --soft-pink: #fae1dd;
+    font-family: Aprodita, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.content {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-bottom: 40px;
+}
+
+.content p {
+    margin-bottom: 20px;
+}
+
+.question-screen h2 {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 4rem !important;
+    font-weight: 700 !important;
+    font-style: italic;
+    color: var(--accent-color);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.btn {
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid var(--accent-color);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.btn-yes {
+    background-color: var(--accent-color);
+    color: black;
+}
+
+.btn-yes:hover {
+    background-color: #ff9aa2;
+    border-color: #ff9aa2;
+    transform: scale(1.05);
+}
+
+.btn-no {
+    color: var(--accent-color);
+}
+
+.btn-no:hover {
+    background-color: #fff0f3;
+}
+
+.hidden {
+    display: none;
+}
+
+.response-message {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--accent-color);
+    margin-top: 40px;
+}
+
+/* Hearts Animation */
+.heart {
+    position: fixed;
+    top: -20px;
+    font-size: 20px;
+    animation: fall linear forwards;
+    z-index: 1000;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 2s ease-out forwards;
+}
+
+.fade-in-delay {
+    opacity: 0;
+    animation: fadeIn 2s ease-out 1s forwards;
+}
+
+.fade-in-delay-2 {
+    opacity: 0;
+    animation: fadeIn 2s ease-out 2s forwards;
+}
+
+.fade-in-delay-3 {
+    opacity: 0;
+    animation: fadeIn 2s ease-out 3s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    .content {
+        font-size: 1.2rem;
+    }
+    .question h2 {
+        font-size: 1.8rem;
+    }
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn {
+        width: 100%;
+    }
+}
+/* FULLSCREEN CENTER QUESTION */
+.question-active {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 100%;
+    text-align: center;
+    z-index: 999;
+
+    background: rgba(0, 0, 0, 0.7); /* dark overlay */
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* optional: style text */
+.question-active h2 {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.hidden {
+    display: none;
+}
+
+.question-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.question-screen h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+.final-image {
+    width: 250px;
+    max-width: 80%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 2s ease-in-out;
+}
