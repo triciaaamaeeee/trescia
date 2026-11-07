@@ -49,6 +49,7 @@
   document.getElementById('year').textContent = new Date().getFullYear();
   function updateScroll() {
     header.classList.toggle('scrolled', window.scrollY > 8);
+    if (!backToTop) return;
     const visible = window.scrollY > 500;
     backToTop.classList.toggle('visible', visible);
     backToTop.setAttribute('aria-hidden', String(!visible));
@@ -57,6 +58,7 @@
   window.addEventListener('scroll', updateScroll, { passive: true });
   updateScroll();
 
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   if ('IntersectionObserver' in window) {
     const links = [...menu.querySelectorAll('a')];
     const sections = new IntersectionObserver(entries => {
@@ -75,11 +77,74 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
-          reveal.unobserve(entry.target);
+        } else if (!motionPreference.matches) {
+          entry.target.classList.remove('show');
         }
       });
     }, { threshold: 0.05 });
-    document.querySelectorAll('.reveal').forEach(item => reveal.observe(item));
+    document.querySelectorAll('.section-heading').forEach(item => item.classList.add('reveal'));
+    document.querySelectorAll('.reveal').forEach(item => {
+      const siblings = [...item.parentElement.children].filter(child => child.classList.contains('reveal'));
+      item.style.setProperty('--reveal-delay', Math.min(siblings.indexOf(item), 3) * 90 + 'ms');
+      if (motionPreference.matches) item.classList.add('show');
+      else reveal.observe(item);
+    });
+    motionPreference.addEventListener('change', () => {
+      if (motionPreference.matches) document.querySelectorAll('.reveal').forEach(item => item.classList.add('show'));
+    });
     root.classList.add('js');
   }
+
+  // Short entrance animations preserve the final layout and remain optional.
+  const homeItems = document.querySelectorAll('.hero-content > *, .hero-visual');
+  const entrances = [];
+  if (!motionPreference.matches) {
+    homeItems.forEach((item, index) => {
+      if (typeof item.animate !== 'function') return;
+      entrances.push(item.animate([
+        { opacity: 0, transform: 'translateY(22px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], { duration: 650, delay: Math.min(index, 5) * 110, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' }));
+    });
+  }
+
+  // Type the existing role once; its full text remains available to screen readers.
+  const role = document.querySelector('.hero-content h2 .home-accent');
+  let typingTimer;
+  let finishTyping = () => {};
+  if (role && !motionPreference.matches) {
+    const text = role.textContent;
+    role.textContent = '';
+    const accessible = document.createElement('span');
+    accessible.className = 'motion-sr-only';
+    accessible.textContent = text;
+    const visual = document.createElement('span');
+    visual.setAttribute('aria-hidden', 'true');
+    const reserve = document.createElement('span');
+    reserve.className = 'typing-reserve';
+    reserve.setAttribute('aria-hidden', 'true');
+    reserve.textContent = text;
+    role.classList.add('typing-role');
+    role.append(accessible, reserve, visual);
+    let position = 0;
+    finishTyping = () => {
+      clearTimeout(typingTimer);
+      visual.textContent = text;
+      role.classList.remove('is-typing');
+    };
+    const type = () => {
+      if (motionPreference.matches) { finishTyping(); return; }
+      visual.textContent = text.slice(0, ++position);
+      if (position < text.length) typingTimer = setTimeout(type, 95);
+      else finishTyping();
+    };
+    role.classList.add('is-typing');
+    typingTimer = setTimeout(type, 500);
+  }
+  motionPreference.addEventListener('change', () => {
+    if (motionPreference.matches) {
+      entrances.forEach(animation => animation.cancel());
+      finishTyping();
+    }
+  });
 })();
