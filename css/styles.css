@@ -1402,20 +1402,20 @@ h1, h2, h3, .btn, .tag-list span, .skill-items span, .hero-tags span {
 }
 .atmosphere {
   background:
-    radial-gradient(ellipse at 85% 68%, rgba(235, 99, 20, .40), transparent 60%),
-    radial-gradient(ellipse at 18% 95%, rgba(194, 76, 12, .25), transparent 55%);
+    radial-gradient(ellipse at 85% 68%, rgba(168, 109, 69, .20), transparent 60%),
+    radial-gradient(ellipse at 18% 95%, rgba(143, 91, 60, .12), transparent 55%);
 }
 .orb-one {
   top: 18%;
   right: -180px;
   width: min(800px, 95vw);
   height: min(800px, 95vw);
-  background: radial-gradient(circle, #ef791f, transparent 70%);
-  opacity: .44;
+  background: radial-gradient(circle, #ad754e, transparent 70%);
+  opacity: .22;
 }
 .orb-two {
-  background: radial-gradient(circle, #c65a16, transparent 70%);
-  opacity: .24;
+  background: radial-gradient(circle, #925d40, transparent 70%);
+  opacity: .12;
 }
 .grid-background { opacity: .07; }
 [data-theme="light"] .atmosphere {

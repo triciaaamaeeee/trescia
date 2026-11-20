@@ -46,7 +46,6 @@
     applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
     try { localStorage.setItem('portfolio-theme', root.dataset.theme); } catch (_) { /* Storage is optional. */ }
   });
-  document.getElementById('year').textContent = new Date().getFullYear();
   function updateScroll() {
     header.classList.toggle('scrolled', window.scrollY > 8);
     if (!backToTop) return;
